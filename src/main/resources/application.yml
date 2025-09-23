@@ -1,0 +1,49 @@
+server:
+  port: 9095
+  servlet:
+    context-path: /jwork-gmao
+
+spring:
+  application:
+    name: gmao
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/jwork_gmao_project
+    username: root
+    password: 
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+
+app:
+  jwt:
+    # Clé secrète pour HS256 (il est préférable de la stocker dans les variables d'environnement)
+    secret: ${JWT_SECRET:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODUwMTBhMDU2NzU1M2U2YTEyODEzNWEiLCJlbWFpbCI6ImNvbnN1bGNvbGxhYmVtaWxlQGdtYWlsLmNvbSIsInJvbGUiOiJ1c2VyIiwicm9sZXMiOlt7ImlkIjoiNjgwNmI2MjU4OGQ5ZTliYmMyZDVkMDlhIiwibmFtZSI6ImFkbWluIn1dLCJpYXQiOjE3NTgzODkwMzYsImV4cCI6MTc1ODM4OTkzNn0.LH633uhX77baYYYvqSnpIIKQVP9_mGZ3fCrhNDuBXLs}
+    access-token-expiration: 900000 # 15 minutes
+    refresh-token-expiration: 604800000 # 7 jours
+
+logging:
+  level:
+    com.tripmad.tripmad: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+management:
+  endpoints:
+    web:
+      base-path: /jwork-gmao
+      exposure:
+        include: health,beans,metrics
+
+  endpoint:
+    health:
+      show-details: always
