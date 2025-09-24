@@ -1,11 +1,14 @@
 package com.project.gmao.features.manage_permission.controller;
 
+import com.project.gmao.common.constants.Constants;
+import com.project.gmao.features.manage_permission.entity.Permission;
+import com.project.gmao.shared.services.interfaces.EntityNameService;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.gmao.features.manage_permission.dto.request.PermissionCreateRequest;
 import com.project.gmao.features.manage_permission.dto.request.PermissionRequest;
-import com.project.gmao.features.manage_permission.dto.request.PermissionUpdateRequest;
 import com.project.gmao.features.manage_permission.dto.response.PermissionResponse;
 import com.project.gmao.features.manage_permission.services.interfaces.PermissionService;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +33,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class PermissionController {
 
     private final PermissionService permissionService;
+    private final EntityNameService entityNameService;
+    private final MessageSource messageSource;
 
     @PostMapping
     @PreAuthorize("hasAuthority('CREATE')")
@@ -42,27 +47,29 @@ public class PermissionController {
     @PreAuthorize("hasAuthority('VIEW')")
     public ResponseEntity<PermissionResponse> getPermission(@PathVariable UUID uuid) {
         PermissionResponse permission = permissionService.getPermissionByUuid(uuid);
-        return ResponseEntity.ok(permission);
+        return ResponseEntity.status(HttpStatus.OK).body(permission);
     }
 
     @GetMapping
     @PreAuthorize("hasAuthority('VIEW')")
     public ResponseEntity<List<PermissionResponse>> getAllPermissions() {
         List<PermissionResponse> permissions = permissionService.getAllPermissions();
-        return ResponseEntity.ok(permissions);
+        return ResponseEntity.status(HttpStatus.OK).body(permissions);
     }
 
     @PutMapping("/{uuid}")
     @PreAuthorize("hasAuthority('UPDATE')")
     public ResponseEntity<PermissionResponse> updatePermission(@PathVariable UUID uuid, @Valid @RequestBody PermissionRequest request) {
         PermissionResponse permission = permissionService.updatePermission(uuid, request);
-        return ResponseEntity.ok(permission);
+        return ResponseEntity.status(HttpStatus.OK).body(permission);
     }
 
     @DeleteMapping("/{uuid}")
     @PreAuthorize("hasAuthority('DELETE')")
-    public ResponseEntity<Void> deletePermission(@PathVariable UUID uuid) {
+    public ResponseEntity<String> deletePermission(@PathVariable UUID uuid) {
         permissionService.deletePermission(uuid);
-        return ResponseEntity.noContent().build();
+        String entityName = entityNameService.getEntityName(Permission.class);
+        String deletionMessage = messageSource.getMessage(Constants.ENTITY_DELETED,new Object[]{entityName}, LocaleContextHolder.getLocale());
+        return ResponseEntity.status(HttpStatus.OK).body(deletionMessage);
     }
 }

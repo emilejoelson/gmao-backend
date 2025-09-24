@@ -13,9 +13,9 @@ import com.project.gmao.features.manage_role.entity.Role;
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
-    Optional<Role> findByName(RoleEnum name);
+    Optional<Role> findByName(String name);
     Optional<Role> findByUuid(UUID uuid);
-    List<Role> findByNameIn(Set<RoleEnum> names);
-    boolean existsByName(RoleEnum name);
+    List<Role> findByNameIn(Set<String> names);
+    boolean existsByName(String name);
 }
 

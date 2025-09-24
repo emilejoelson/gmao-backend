@@ -12,8 +12,8 @@ import com.project.gmao.features.manage_permission.entity.Permission;
 
 @Repository
 public interface PermissionRepository extends JpaRepository<Permission, Long> {
-    Optional<Permission> findByName(PermissionEnum name);
+    Optional<Permission> findByName(String name);
     Optional<Permission> findByUuid(UUID uuid);
-    List<Permission> findByNameIn(Set<PermissionEnum> names);
-    boolean existsByName(PermissionEnum name);
+    List<Permission> findByNameIn(Set<String> names);
+    boolean existsByName(String name);
 }

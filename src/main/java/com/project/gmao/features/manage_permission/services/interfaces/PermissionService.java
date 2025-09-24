@@ -15,5 +15,5 @@ public interface PermissionService {
     List<PermissionResponse> getAllPermissions();
     PermissionResponse updatePermission(UUID uuid, PermissionRequest request);
     void deletePermission(UUID uuid);
-    Permission findByName(PermissionEnum name);
+    Permission findByName(String name);
 }

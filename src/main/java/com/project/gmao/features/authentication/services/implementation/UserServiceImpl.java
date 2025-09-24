@@ -2,29 +2,22 @@ package com.project.gmao.features.authentication.services.implementation;
 
 import java.util.List;
 import java.util.Set;
-import java.util.HashSet;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.project.gmao.common.constants.Constants;
 import com.project.gmao.common.enums.RoleEnum;
 import com.project.gmao.core.exception.ElementAlreadyExistsException;
 import com.project.gmao.core.exception.ElementNotFoundException;
-import com.project.gmao.features.authentication.dto.request.AssignRolesToUserRequest;
 import com.project.gmao.features.authentication.dto.request.SignupRequest;
 import com.project.gmao.features.authentication.dto.request.UserRoleAssignmentRequest;
-import com.project.gmao.features.authentication.dto.request.UserUpdateRequest;
-import com.project.gmao.features.authentication.dto.response.AuthResponse;
 import com.project.gmao.features.authentication.dto.response.UserResponse;
-import com.project.gmao.features.authentication.dto.response.UserRoleAssignmentResponse;
 import com.project.gmao.features.authentication.entity.User;
 import com.project.gmao.features.authentication.mapper.UserMapper;
 import com.project.gmao.features.authentication.repository.UserRepository;
 import com.project.gmao.features.authentication.services.interfaces.UserService;
-import com.project.gmao.features.manage_permission.entity.Permission;
 import com.project.gmao.features.manage_role.entity.Role;
 import com.project.gmao.features.manage_role.repository.RoleRepository;
 
@@ -117,7 +110,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse removeRolesFromUser(UUID userUuid, Set<RoleEnum> roles) {
+    public UserResponse removeRolesFromUser(UUID userUuid, Set<String> roles) {
         User user = userRepository.findByUuid(userUuid)
                 .orElseThrow(() -> new ElementNotFoundException("User not found"));
 

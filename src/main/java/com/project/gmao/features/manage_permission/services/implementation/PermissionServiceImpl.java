@@ -6,13 +6,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.project.gmao.common.constants.Constants;
-import com.project.gmao.common.enums.PermissionEnum;
 import com.project.gmao.core.exception.ElementAlreadyExistsException;
 import com.project.gmao.core.exception.ElementNotFoundException;
-import com.project.gmao.features.manage_permission.dto.request.PermissionCreateRequest;
 import com.project.gmao.features.manage_permission.dto.request.PermissionRequest;
-import com.project.gmao.features.manage_permission.dto.request.PermissionUpdateRequest;
 import com.project.gmao.features.manage_permission.dto.response.PermissionResponse;
 import com.project.gmao.features.manage_permission.entity.Permission;
 import com.project.gmao.features.manage_permission.mapper.PermissionMapper;
@@ -92,7 +88,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public Permission findByName(PermissionEnum name) {
+    public Permission findByName(String name) {
         return permissionRepository.findByName(name)
                 .orElseThrow(() -> new ElementNotFoundException("Permission not found"));
     }

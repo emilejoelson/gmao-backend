@@ -14,6 +14,6 @@ public record UserRoleAssignmentRequest(
     UUID userUuid,
 
     @NotEmpty(message = "Au moins un rôle doit être spécifié")
-    Set<RoleEnum> roles
+    Set<String> roles
 ) implements Serializable {
 }

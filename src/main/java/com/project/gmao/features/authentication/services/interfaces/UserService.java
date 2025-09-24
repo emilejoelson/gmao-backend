@@ -15,5 +15,5 @@ public interface UserService {
     UserResponse updateUser(UUID uuid, SignupRequest request);
     void deleteUser(UUID uuid);
     UserResponse assignRolesToUser(UserRoleAssignmentRequest request);
-    UserResponse removeRolesFromUser(UUID userUuid, Set<RoleEnum> roles);
+    UserResponse removeRolesFromUser(UUID userUuid, Set<String> roles);
 }

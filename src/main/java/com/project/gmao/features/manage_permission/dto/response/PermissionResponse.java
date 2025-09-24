@@ -9,7 +9,7 @@ import com.project.gmao.features.authentication.dto.response.BaseDto;
 public record PermissionResponse(
     Long id,
     UUID uuid,
-    PermissionEnum name,
+    String name,
     String description,
     boolean enabled,
     BaseDto baseDto

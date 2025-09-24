@@ -15,7 +15,7 @@ import java.util.HashSet;
 @Data
 @AllArgsConstructor
 public class UserPrincipal implements UserDetails {
-    
+
     private Long id;
     private String prenom;
     private String nom;
@@ -29,21 +29,24 @@ public class UserPrincipal implements UserDetails {
         Set<GrantedAuthority> authorities = new HashSet<>();
 
         user.getRoles().forEach(role -> {
-            authorities.add(new SimpleGrantedAuthority(role.getName().getAuthority()));
-            role.getPermissions().forEach(permission -> 
-                authorities.add(new SimpleGrantedAuthority(permission.getName().getName()))
+            // Add role authority
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
+
+            // Add permission authorities - fixed: removed extra .getName() call
+            role.getPermissions().forEach(permission ->
+                    authorities.add(new SimpleGrantedAuthority(permission.getName()))
             );
         });
 
         return new UserPrincipal(
-            user.getId(),
-            user.getPrenom(),
-            user.getNom(),
-            user.getEmail(),
-            user.getTelephone(),
-            user.getPassword(),
-            authorities,
-            user.isEnabled()
+                user.getId(),
+                user.getPrenom(),
+                user.getNom(),
+                user.getEmail(),
+                user.getTelephone(),
+                user.getPassword(),
+                authorities,
+                user.isEnabled()
         );
     }
 

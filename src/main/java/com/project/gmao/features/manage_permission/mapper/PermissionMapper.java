@@ -6,7 +6,6 @@ import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 
 import com.project.gmao.features.authentication.dto.response.BaseDto;
-import com.project.gmao.features.manage_permission.dto.request.PermissionCreateRequest;
 import com.project.gmao.features.manage_permission.dto.request.PermissionRequest;
 import com.project.gmao.features.manage_permission.dto.response.PermissionResponse;
 import com.project.gmao.features.manage_permission.entity.Permission;

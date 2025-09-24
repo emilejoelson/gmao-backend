@@ -9,12 +9,12 @@ import com.project.gmao.features.authentication.dto.response.BaseDto;
 import com.project.gmao.features.manage_permission.dto.response.PermissionResponse;
 
 public record RoleResponse(
-    Long id,
-    UUID uuid,
-    RoleEnum name,
-    String description,
-    boolean enabled,
-    Set<PermissionResponse> permissions,
-    BaseDto baseDto
+        Long id,
+        UUID uuid,
+        String name,  // Changed from RoleEnum to String
+        String description,
+        boolean enabled,
+        Set<PermissionResponse> permissions,
+        BaseDto baseDto
 ) implements Serializable {
 }

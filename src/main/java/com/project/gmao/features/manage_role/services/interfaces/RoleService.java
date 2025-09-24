@@ -19,7 +19,7 @@ public interface RoleService {
     RoleResponse updateRole(UUID uuid, RoleRequest request);
     void deleteRole(UUID uuid);
     RoleResponse assignPermissionsToRole(RolePermissionAssignmentRequest request);
-    RoleResponse removePermissionsFromRole(UUID roleUuid, Set<PermissionEnum> permissions);
-    Role findByName(RoleEnum name);
+    RoleResponse removePermissionsFromRole(UUID roleUuid, Set<String> permissions);
+    Role findByName(String name);
 }
 

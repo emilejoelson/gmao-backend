@@ -62,7 +62,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             // Initialize roles set since it's ignored in mapper
             user.setRoles(new HashSet<>());
             
-            Role defaultRole = roleRepository.findByName(RoleEnum.USER)
+            Role defaultRole = roleRepository.findByName("USER")
                     .orElseThrow(() -> new ElementNotFoundException("Default role not found"));
             user.getRoles().add(defaultRole);
             

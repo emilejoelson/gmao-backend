@@ -29,9 +29,9 @@ public class Permission extends BaseEntity {
     @Column(unique = true, nullable = false)
     private UUID uuid;
 
-    @Enumerated(EnumType.STRING)
+    //@Enumerated(EnumType.STRING)
     @Column(nullable = false, unique = true)
-    private PermissionEnum name;
+    private String name;
 
     @Column(length = 255)
     private String description;

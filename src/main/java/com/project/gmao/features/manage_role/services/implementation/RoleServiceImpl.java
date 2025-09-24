@@ -7,18 +7,12 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
-import com.project.gmao.common.constants.Constants;
-import com.project.gmao.common.enums.PermissionEnum;
-import com.project.gmao.common.enums.RoleEnum;
 import com.project.gmao.core.exception.ElementAlreadyExistsException;
 import com.project.gmao.core.exception.ElementNotFoundException;
 import com.project.gmao.features.manage_permission.entity.Permission;
 import com.project.gmao.features.manage_permission.repository.PermissionRepository;
-import com.project.gmao.features.manage_role.dto.request.AssignPermissionsToRoleRequest;
-import com.project.gmao.features.manage_role.dto.request.RoleCreateRequest;
 import com.project.gmao.features.manage_role.dto.request.RolePermissionAssignmentRequest;
 import com.project.gmao.features.manage_role.dto.request.RoleRequest;
-import com.project.gmao.features.manage_role.dto.request.RoleUpdateRequest;
 import com.project.gmao.features.manage_role.dto.response.RoleResponse;
 import com.project.gmao.features.manage_role.entity.Role;
 import com.project.gmao.features.manage_role.mapper.RoleMapper;
@@ -41,11 +35,15 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleResponse createRole(RoleRequest request) {
-        if (roleRepository.existsByName(request.name())) {
+        // Convert to uppercase and add ROLE_ prefix if not present
+        String roleName = formatRoleName(request.name());
+
+        if (roleRepository.existsByName(roleName)) {
             throw new ElementAlreadyExistsException("Role already exists");
         }
 
         Role role = roleMapper.roleRequestToRole(request);
+        role.setName(roleName);  // Set the formatted name
 
         if (request.permissions() != null && !request.permissions().isEmpty()) {
             Set<Permission> permissions = permissionRepository.findByNameIn(request.permissions())
@@ -55,6 +53,12 @@ public class RoleServiceImpl implements RoleService {
 
         Role savedRole = roleRepository.save(role);
         return roleMapper.roleToRoleResponse(savedRole);
+    }
+
+    // Helper method to format role names consistently
+    private String formatRoleName(String name) {
+        String upperName = name.trim().toUpperCase();
+        return upperName.startsWith("ROLE_") ? upperName : "ROLE_" + upperName;
     }
 
     @Override
@@ -125,7 +129,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public RoleResponse removePermissionsFromRole(UUID roleUuid, Set<PermissionEnum> permissions) {
+    public RoleResponse removePermissionsFromRole(UUID roleUuid, Set<String> permissions) {
         Role role = roleRepository.findByUuid(roleUuid)
                 .orElseThrow(() -> new ElementNotFoundException("Role not found"));
 
@@ -138,7 +142,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role findByName(RoleEnum name) {
+    public Role findByName(String name) {
         return roleRepository.findByName(name)
                 .orElseThrow(() -> new ElementNotFoundException("Role not found"));
     }

@@ -14,6 +14,6 @@ public record RolePermissionAssignmentRequest(
     UUID roleUuid,
 
     @NotEmpty(message = "Au moins une permission doit être spécifiée")
-    Set<PermissionEnum> permissions
+    Set<String> permissions
 ) implements Serializable {
 }

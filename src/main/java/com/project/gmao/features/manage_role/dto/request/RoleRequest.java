@@ -11,11 +11,11 @@ import jakarta.validation.constraints.Size;
 
 public record RoleRequest(
     @NotNull(message = "Le nom du rôle est obligatoire")
-    RoleEnum name,
+    String name,
 
     @Size(max = 255, message = "La description ne peut pas dépasser 255 caractères")
     String description,
 
-    Set<PermissionEnum> permissions
+    Set<String> permissions
 ) implements Serializable {
 }
