@@ -9,5 +9,4 @@ public class GmaoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(GmaoApplication.class, args);
 	}
-
 }
